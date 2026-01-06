@@ -16,8 +16,10 @@ be displayed when they play.
 ### Instructions:
 
 Install: clone
+
 Compile: make compile
-Run: make ttt
+
+Run: make game
 1. Create a username (1-20 characters) and a password (1-20 characters)
 2. Wait for someone else to connect
 3. To make a move, input the letter and number of the desired square
