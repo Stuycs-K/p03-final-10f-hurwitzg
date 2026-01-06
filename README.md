@@ -15,8 +15,10 @@ be displayed when they play.
   
 ### Instructions:
 
-Install: clone\n
-Compile: make compile\n
+Install: clone
+
+Compile: make compile
+
 Run: make game
 1. Create a username (1-20 characters) and a password (1-20 characters)
 2. Wait for someone else to connect
