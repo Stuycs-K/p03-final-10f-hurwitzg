@@ -1,5 +1,5 @@
 #include "tictactoe.h"
-int err(){
+int er(){
   printf("%s\n",strerror(errno));
   exit(1);
 }
@@ -17,6 +17,7 @@ char ** boardSetup(){
 }
 int * translateInput(char * str){
   int * coords = calloc(sizeof(int),2);
+  if (strlen(str) > 2)return NULL;
   if (str[0] == 'A' || str[0] == 'a'){
     coords[0] = 0;
   }
@@ -56,13 +57,14 @@ char ** boardChange(char ** board, char * input, char XorO){
   }
   return board;
 }
-void printBoard(char ** board){
+char * printBoard(char ** board){
+  char * oneLine = calloc(20,1);
   for (int i = 0; i < 3; i++){
-    for (int j = 0; j < 3; j++){
-      printf("%c",board[i][j]);
-    }
-    printf("\n");
+    strcat(oneLine,board[i]);
+    strcat(oneLine,"\n");
   }
+  printf("%s",oneLine);
+  return oneLine;
 }
 char evaluate(char ** board){
   if ((board[0][0] == 'X' &&
