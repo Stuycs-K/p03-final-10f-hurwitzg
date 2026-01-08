@@ -2,9 +2,12 @@
 
 void clientLogic(int server_socket){
   while(1){
+    char * buff = calloc(BUFFER_SIZE,1);
+    while(1){
       printf("Make a move: ");
-      char * buff = calloc(BUFFER_SIZE,1);
       if(!fgets(buff,BUFFER_SIZE,stdin)) exit(0);
+      if(translateInput(buff))break;
+    }
       int len, bytes_sent;
       len = strlen(buff);
       bytes_sent = send(server_socket, buff, len, 0);
@@ -12,6 +15,7 @@ void clientLogic(int server_socket){
       int bytes_read;
       bytes_read = recv(server_socket, buff, BUFFER_SIZE, 0);
       if (bytes_read == 0)exit(0);
+      if (buff[1] == -15)printf("Invalid position; Please input a valid square\n");continue;
       printf("Recieved %s\n",buff);
     }
   }
