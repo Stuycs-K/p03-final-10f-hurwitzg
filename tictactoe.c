@@ -19,17 +19,18 @@ int * translateInput(char * str){
   int * coords = calloc(sizeof(int),2);
   if (!str[2])printf("Invalid position; Please input a valid square\n");return NULL;
   if (str[0] == 'A' || str[0] == 'a'){
-    coords[0] = 0;
-  }
-  else if (str[0] == 'B' || str[0] == 'b'){
     coords[0] = 1;
   }
-  else if (str[0] == 'C' || str[0] == 'c'){
+  else if (str[0] == 'B' || str[0] == 'b'){
     coords[0] = 2;
+  }
+  else if (str[0] == 'C' || str[0] == 'c'){
+    coords[0] = 3;
   }
   else{
     printf("Invalid position; Please input a valid square\n");
-    return NULL;
+    coords[0] = -1;
+    return coords;
   }
   if (str[1] == '1'){
     coords[1] = 0;
@@ -42,7 +43,8 @@ int * translateInput(char * str){
   }
   else{
     printf("Invalid position; Please input a valid square\n");
-    return NULL;
+    coords[0] = -1;
+    return coords;
   }
   return coords;
 }
@@ -50,8 +52,8 @@ char ** boardChange(char ** board, char * input, char XorO){
   int * coords = calloc(sizeof(int),2);
   if(!(coords = translateInput(input)))return board;
   if (XorO == 'X'){
-    if (board[coords[0]][coords[1]] == '_'){
-      board[coords[0]][coords[1]] = 'X';
+    if (board[coords[0]-1][coords[1]] == '_'){
+      board[coords[0]-1][coords[1]] = 'X';
     }
     else{
       printf("Invalid position; Please input a valid square\n");
@@ -59,8 +61,8 @@ char ** boardChange(char ** board, char * input, char XorO){
     }
   }
   else{
-    if (board[coords[0]][coords[1]] == '_'){
-      board[coords[0]][coords[1]] = 'O';
+    if (board[coords[0]-1][coords[1]] == '_'){
+      board[coords[0]-1][coords[1]] = 'O';
     }
     else{
       printf("Invalid position; Please input a valid square\n");

@@ -3,7 +3,7 @@ default :
 	echo "baka"
 compile client main : client.o server.o serverHelp.o serverHelp.h tictactoe.o tictactoe.h
 	@gcc -o client client.o serverHelp.o tictactoe.o
-	@gcc -o main server.o serverHelp.o
+	@gcc -o main server.o serverHelp.o tictactoe.o
 client.o : client.c serverHelp.h
 	@gcc -c client.c
 server.o : server.c serverHelp.h
