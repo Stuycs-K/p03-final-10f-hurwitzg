@@ -19,10 +19,9 @@ void subserver_logic(int client_socket1, int client_socket2){
     pBoard = printBoard(board);
     char * buff = calloc(BUFFER_SIZE,1);
     bytes_read = recv(client_socket1, buff, BUFFER_SIZE, 0);
+    if (!translateInput(buff))buff[1] = 15;bytes_sent = send(client_socket1, pBoard, 20, 0);continue;
     if (bytes_read == 0)exit(0);
-    int * coords = calloc(sizeof(int),2);
-    coords = translateInput(buff);
-    if (boardChange(board, coords,'X')){
+    if (boardChange(board, buff,'X')){
       pBoard = printBoard(board);
       if (evaluate(board) == 'C'){
         bytes_sent = send(client_socket1, pBoard, 20, 0);
@@ -53,15 +52,14 @@ void subserver_logic(int client_socket1, int client_socket2){
       }
     }
     else{
-      buff[1] = -15;
+      buff[1] = 15;
       bytes_sent = send(client_socket1, buff, 2, 0);
       continue;
     }
     buff = calloc(BUFFER_SIZE,1);
     bytes_read = recv(client_socket2, buff, BUFFER_SIZE, 0);
     if (bytes_read == 0)exit(0);
-    coords = translateInput(buff);
-    if (boardChange(board, coords,'O')){
+    if (boardChange(board, buff,'O')){
       pBoard = printBoard(board);
       if (evaluate(board) == 'C'){
         bytes_sent = send(client_socket1, pBoard, 20, 0);
@@ -92,7 +90,7 @@ void subserver_logic(int client_socket1, int client_socket2){
       }
     }
     else{
-      buff[1] = -15;
+      buff[1] = 15;
       bytes_sent = send(client_socket2, buff, 2, 0);
       continue;
     }

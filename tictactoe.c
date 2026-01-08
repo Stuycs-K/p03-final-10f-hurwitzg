@@ -17,32 +17,31 @@ char ** boardSetup(){
 }
 int * translateInput(char * str){
   int * coords = calloc(sizeof(int),2);
-  if (!str[2])printf("Invalid position; Please input a valid square\n");return NULL;
-  if (str[0] == 'A' || str[0] == 'a'){
+  printf("%d\n%d\n%d\n",str[0],str[1],str[2]);
+  if (str[2] != 10)printf("Invalid position; Please input a valid square\n");return NULL;
+  if (str[0] == 65 || str[0] == 97){
     coords[0] = 0;
   }
-  else if (str[0] == 'B' || str[0] == 'b'){
+  else if (str[0] == 66 || str[0] == 98){
     coords[0] = 1;
   }
-  else if (str[0] == 'C' || str[0] == 'c'){
+  else if (str[0] == 67 || str[0] == 99){
     coords[0] = 2;
   }
   else{
-    printf("Invalid position; Please input a valid square\n");
-    return NULL;
+    coords[0] = 3;
   }
-  if (str[1] == '1'){
+  if (str[1] == 49){
     coords[1] = 0;
   }
-  else if (str[1] == '2'){
+  else if (str[1] == 50){
     coords[1] = 1;
   }
-  else if (str[1] == '3'){
+  else if (str[1] == 51){
     coords[1] = 2;
   }
   else{
-    printf("Invalid position; Please input a valid square\n");
-    return NULL;
+    coords[0] = 3;
   }
   return coords;
 }
