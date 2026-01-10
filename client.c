@@ -30,7 +30,12 @@ int main(int argc, char *argv[] ) {
       IP=argv[1];
     }
     int server_socket = client_tcp_handshake(IP);
+    int bytes_read;
+    char * buff = calloc(BUFFER_SIZE,1);
+    bytes_read = recv(server_socket, buff, BUFFER_SIZE, 0);
+    while(1){
+      if (!strcmp(buff,"initial"))break;
+    }
     printf("client connected.\n");
     clientLogic(server_socket);
-
 }

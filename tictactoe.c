@@ -17,6 +17,7 @@ char ** boardSetup(){
 }
 int * translateInput(char * str){
   int * coords = calloc(sizeof(int),2);
+<<<<<<< HEAD
   printf("%d\n%d\n%d\n",str[0],str[1],str[2]);
   if (str[2] != 10)printf("Invalid position; Please input a valid square\n");return NULL;
   if (str[0] == 65 || str[0] == 97){
@@ -26,10 +27,26 @@ int * translateInput(char * str){
     coords[0] = 1;
   }
   else if (str[0] == 67 || str[0] == 99){
+=======
+  if (!str[2])printf("Invalid position; Please input a valid square\n");return NULL;
+  if (str[0] == 'A' || str[0] == 'a'){
+    coords[0] = 1;
+  }
+  else if (str[0] == 'B' || str[0] == 'b'){
+>>>>>>> 24187b4f19f10c7c9adf40455fde894432e3ae97
     coords[0] = 2;
   }
-  else{
+  else if (str[0] == 'C' || str[0] == 'c'){
     coords[0] = 3;
+  }
+  else{
+<<<<<<< HEAD
+    coords[0] = 3;
+=======
+    printf("Invalid position; Please input a valid square\n");
+    coords[0] = -1;
+    return coords;
+>>>>>>> 24187b4f19f10c7c9adf40455fde894432e3ae97
   }
   if (str[1] == 49){
     coords[1] = 0;
@@ -41,7 +58,13 @@ int * translateInput(char * str){
     coords[1] = 2;
   }
   else{
+<<<<<<< HEAD
     coords[0] = 3;
+=======
+    printf("Invalid position; Please input a valid square\n");
+    coords[0] = -1;
+    return coords;
+>>>>>>> 24187b4f19f10c7c9adf40455fde894432e3ae97
   }
   return coords;
 }
@@ -49,10 +72,29 @@ char ** boardChange(char ** board, char * input, char XorO){
   int * coords = calloc(sizeof(int),2);
   if(!(coords = translateInput(input)))return board;
   if (XorO == 'X'){
+<<<<<<< HEAD
     board[coords[0]][coords[1]] = 'X';
   }
   else{
     board[coords[0]][coords[1]] = 'O';
+=======
+    if (board[coords[0]-1][coords[1]] == '_'){
+      board[coords[0]-1][coords[1]] = 'X';
+    }
+    else{
+      printf("Invalid position; Please input a valid square\n");
+      return NULL;
+    }
+  }
+  else{
+    if (board[coords[0]-1][coords[1]] == '_'){
+      board[coords[0]-1][coords[1]] = 'O';
+    }
+    else{
+      printf("Invalid position; Please input a valid square\n");
+      return NULL;
+    }
+>>>>>>> 24187b4f19f10c7c9adf40455fde894432e3ae97
   }
   return board;
 }
