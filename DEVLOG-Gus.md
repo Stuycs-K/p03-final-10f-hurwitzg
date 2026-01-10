@@ -11,10 +11,10 @@ on the grid that the user inputs will change, and this change is reflected on th
 I also created a couple helper methods to manage tasks such as checking if the game is over, setting up the board,
 printing the board, changing the board, and translating user input into a spot on the grid. The work on the game took me roughly 90 minutes.
 
-### 2026-01-07 - Finished game outline, started server
-Roughly 10 minutes on game outline and 130 on the server.
-I created a server that connects two clients. I then started
-to work on the server logic so that the game is actually playable.
-The server does all the processing for the game; the clients
-are only players. Thus, the code is a little more complicated
-than just sending data back and forth.
+### 2026-01-07 - finished outline of the game, started on server
+Roughly 15 minutes on game and 120 on server. I finalized the helper
+methods in tictactoe.c and started on serverHelp, server, and client.
+As of right now, the two clients can connect to the server. Next step
+is to allow the clients to play once they connect.
+
+### 2026-01-09 - continuing on server

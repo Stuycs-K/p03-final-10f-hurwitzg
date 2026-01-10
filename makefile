@@ -8,7 +8,7 @@ client.o : client.c serverHelp.h
 	@gcc -c client.c
 server.o : server.c serverHelp.h
 	@gcc -c server.c
-serverHelp.o : serverHelp.c serverHelp.h tictactoe.h
+serverHelp.o : serverHelp.c serverHelp.h
 	@gcc -c serverHelp.c
 tictactoe.o : tictactoe.c tictactoe.h
 	@gcc -c tictactoe.c

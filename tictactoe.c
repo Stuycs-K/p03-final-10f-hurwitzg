@@ -49,22 +49,10 @@ char ** boardChange(char ** board, char * input, char XorO){
   int * coords = calloc(sizeof(int),2);
   if(!(coords = translateInput(input)))return board;
   if (XorO == 'X'){
-    if (board[coords[0]][coords[1]] == '_'){
-      board[coords[0]][coords[1]] = 'X';
-    }
-    else{
-      printf("Invalid position; Please input a valid square\n");
-      return NULL;
-    }
+    board[coords[0]][coords[1]] = 'X';
   }
   else{
-    if (board[coords[0]][coords[1]] == '_'){
-      board[coords[0]][coords[1]] = 'O';
-    }
-    else{
-      printf("Invalid position; Please input a valid square\n");
-      return NULL;
-    }
+    board[coords[0]][coords[1]] = 'O';
   }
   return board;
 }
@@ -138,4 +126,21 @@ char evaluate(char ** board){
                     }
                   }
                   return 'T';
+}
+int main(){
+  char ** board = calloc(sizeof(char*),3);
+  board = boardSetup();
+  printBoard(board);
+  char * str1 = "A1";
+  boardChange(board, str1, 'X');
+  printBoard(board);
+  char * str2 = "b1";
+  boardChange(board, str2, 'X');
+  printBoard(board);
+  char * str3 = "c2";
+  boardChange(board, str3, 'O');
+  printBoard(board);
+  char * str4 = "d4";
+  boardChange(board, str4, 'X');
+  printBoard(board);
 }
