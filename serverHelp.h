@@ -15,7 +15,7 @@
 
 #ifndef SERVERHELP_H
 #define SERVERHELP_H
-#define PORT "19233"
+#define PORT "18743"
 #define BUFFER_SIZE 1024
 void err(int i, char*message);
 int server_setup();

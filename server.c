@@ -9,7 +9,12 @@ int r(){
   int x = (rand()%2);
   return x;
 }
+int max(int a, int b){
+  if (a > b){return a;}
+  else {return b;}
+}
 void subserver_logic(int client_socket1, int client_socket2){
+  fd_set fds;
   char ** board = calloc(sizeof(char*),3);
   board = boardSetup();
   char * pBoard = calloc(20,1);
@@ -19,6 +24,7 @@ void subserver_logic(int client_socket1, int client_socket2){
   bytes_sent = send(client_socket1, pBoard, 22, 0);
   bytes_sent = send(client_socket2, pBoard, 22, 0);
 	while(1){
+
     char * buff = calloc(BUFFER_SIZE,1);
     bytes_read = recv(client_socket1, buff, BUFFER_SIZE, 0);
     if (bytes_read == 0)exit(0);
