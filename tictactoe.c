@@ -1,3 +1,4 @@
+
 #include "tictactoe.h"
 int er(){
   printf("%s\n",strerror(errno));
@@ -17,54 +18,46 @@ char ** boardSetup(){
 }
 int * translateInput(char * str){
   int * coords = calloc(sizeof(int),2);
-<<<<<<< HEAD
-  printf("%d\n%d\n%d\n",str[0],str[1],str[2]);
-  if (str[2] != 10)printf("Invalid position; Please input a valid square\n");return NULL;
-  if (str[0] == 65 || str[0] == 97){
-    coords[0] = 0;
-  }
-  else if (str[0] == 66 || str[0] == 98){
+  if (!strcmp("A1",str) || !strcmp("a1",str)){
     coords[0] = 1;
-  }
-  else if (str[0] == 67 || str[0] == 99){
-=======
-  if (!str[2])printf("Invalid position; Please input a valid square\n");return NULL;
-  if (str[0] == 'A' || str[0] == 'a'){
-    coords[0] = 1;
-  }
-  else if (str[0] == 'B' || str[0] == 'b'){
->>>>>>> 24187b4f19f10c7c9adf40455fde894432e3ae97
-    coords[0] = 2;
-  }
-  else if (str[0] == 'C' || str[0] == 'c'){
-    coords[0] = 3;
-  }
-  else{
-<<<<<<< HEAD
-    coords[0] = 3;
-=======
-    printf("Invalid position; Please input a valid square\n");
-    coords[0] = -1;
-    return coords;
->>>>>>> 24187b4f19f10c7c9adf40455fde894432e3ae97
-  }
-  if (str[1] == 49){
     coords[1] = 0;
   }
-  else if (str[1] == 50){
+  else if (!strcmp("A2",str) || !strcmp("a2",str)){
+    coords[0] = 1;
     coords[1] = 1;
   }
-  else if (str[1] == 51){
+  else if (!strcmp("A3",str) || !strcmp("a3",str)){
+    coords[0] = 1;
+    coords[1] = 2;
+  }
+  else if (!strcmp("B1",str) || !strcmp("b1",str)){
+    coords[0] = 2;
+    coords[1] = 0;
+  }
+  else if (!strcmp("B2",str) || !strcmp("b2",str)){
+    coords[0] = 2;
+    coords[1] = 1;
+  }
+  else if (!strcmp("B3",str) || !strcmp("b3",str)){
+    coords[0] = 2;
+    coords[1] = 2;
+  }
+  else if (!strcmp("C1",str) || !strcmp("c1",str)){
+    coords[0] = 3;
+    coords[1] = 0;
+  }
+  else if (!strcmp("C2",str) || !strcmp("c2",str)){
+    coords[0] = 3;
+    coords[1] = 1;
+  }
+  else if (!strcmp("C3",str) || !strcmp("c3",str)){
+    coords[0] = 3;
     coords[1] = 2;
   }
   else{
-<<<<<<< HEAD
-    coords[0] = 3;
-=======
     printf("Invalid position; Please input a valid square\n");
-    coords[0] = -1;
+    coords[0] = 4;
     return coords;
->>>>>>> 24187b4f19f10c7c9adf40455fde894432e3ae97
   }
   return coords;
 }
@@ -72,12 +65,6 @@ char ** boardChange(char ** board, char * input, char XorO){
   int * coords = calloc(sizeof(int),2);
   if(!(coords = translateInput(input)))return board;
   if (XorO == 'X'){
-<<<<<<< HEAD
-    board[coords[0]][coords[1]] = 'X';
-  }
-  else{
-    board[coords[0]][coords[1]] = 'O';
-=======
     if (board[coords[0]-1][coords[1]] == '_'){
       board[coords[0]-1][coords[1]] = 'X';
     }
@@ -94,7 +81,6 @@ char ** boardChange(char ** board, char * input, char XorO){
       printf("Invalid position; Please input a valid square\n");
       return NULL;
     }
->>>>>>> 24187b4f19f10c7c9adf40455fde894432e3ae97
   }
   return board;
 }
@@ -168,21 +154,4 @@ char evaluate(char ** board){
                     }
                   }
                   return 'T';
-}
-int main(){
-  char ** board = calloc(sizeof(char*),3);
-  board = boardSetup();
-  printBoard(board);
-  char * str1 = "A1";
-  boardChange(board, str1, 'X');
-  printBoard(board);
-  char * str2 = "b1";
-  boardChange(board, str2, 'X');
-  printBoard(board);
-  char * str3 = "c2";
-  boardChange(board, str3, 'O');
-  printBoard(board);
-  char * str4 = "d4";
-  boardChange(board, str4, 'X');
-  printBoard(board);
 }

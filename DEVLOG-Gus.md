@@ -17,4 +17,6 @@ methods in tictactoe.c and started on serverHelp, server, and client.
 As of right now, the two clients can connect to the server. Next step
 is to allow the clients to play once they connect.
 
-### 2026-01-09 - continuing on server
+### 2026-01-08 - 2026-01-11 - continuing on server
+Roughly 3 hours on the server. Clients can now connect to each
+other, and the server logs the game. Working on streamlining gameplay.
