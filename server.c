@@ -23,6 +23,15 @@ void subserver_logic(int client_socket1, int client_socket2){
   int bytes_sent;
   pBoard = printBoard(board);
   bytes_sent = send(client_socket1, pBoard, 22, 0);
+  char p1,p2;
+  if (r()){
+    p1 = 'X';
+    p2 = 'O';
+  }
+  else{
+    p2 = 'X';
+    p1 = 'O';
+  }
   char t2 = 0;
 	while(1){
     FD_ZERO(&fds);
@@ -31,7 +40,7 @@ void subserver_logic(int client_socket1, int client_socket2){
     if (FD_ISSET(client_socket1,&fds) && !t2){
       bytes_read = recv(client_socket1, buff, BUFFER_SIZE, 0);
       if (bytes_read == 0)exit(0);
-      if (board = boardChange(board, buff,'X')){
+      if (board = boardChange(board, buff,p1)){
         pBoard = printBoard(board);
         if (evaluate(board) == 'C'){
           t2 = 1;
@@ -69,7 +78,8 @@ void subserver_logic(int client_socket1, int client_socket2){
       }
     }
     else if(t2){}
-    else{
+    else{p1 = 'X';
+    p2 = 'O';
       continue;
     }
     buff = calloc(BUFFER_SIZE,1);
@@ -79,7 +89,7 @@ void subserver_logic(int client_socket1, int client_socket2){
     if (FD_ISSET(client_socket2,&fds) && t2){
       bytes_read = recv(client_socket2, buff, BUFFER_SIZE, 0);
       if (bytes_read == 0)exit(0);
-      if (board = boardChange(board, buff,'O')){
+      if (board = boardChange(board, buff,p2)){
         pBoard = printBoard(board);
         if (evaluate(board) == 'C'){
           t2 = 0;
