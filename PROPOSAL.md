@@ -17,8 +17,8 @@ or the whole board is full, the game will end.
 # Technical Details:
 
 I will be using sockets and networking to link the two players,
-file reading and writing to track all-time stats for eahc player,
-processes to manage multiple games being played at the same time, and 
+file reading and writing to track all-time stats for each player,
+processes to manage multiple games being played at the same time, and
 allocating memory to create arrays, strings, write to files, and all other
 memory-allocation tasks. I am responsible for all parts because I am working solo.
 
