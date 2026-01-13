@@ -23,7 +23,6 @@ void subserver_logic(int client_socket1, int client_socket2){
   int bytes_sent;
   pBoard = printBoard(board);
   bytes_sent = send(client_socket1, pBoard, 22, 0);
-  //bytes_sent = send(client_socket2, pBoard, 22, 0);
   char t2 = 0;
 	while(1){
     FD_ZERO(&fds);
