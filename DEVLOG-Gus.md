@@ -20,3 +20,7 @@ is to allow the clients to play once they connect.
 ### 2026-01-08 - 2026-01-11 - continuing on server
 Roughly 3 hours on the server. Clients can now connect to each
 other, and the server logs the game. Working on streamlining gameplay.
+
+### 2026-01-12 - implementing select
+Roughly 1 hour. Began implementing select so that the server knows who's turn it is and the clients
+can know when to make a move.

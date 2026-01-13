@@ -5,37 +5,30 @@ void clientLogic(int server_socket){
   fd_set fds;
   int bytes_read;
   char * buff = calloc(BUFFER_SIZE,1);
-  bytes_read = recv(server_socket, buff, 22, 0);
-  printf("%s\n",buff);
+  int * works;
+  int len, bytes_sent;
   while(1){
     FD_ZERO(&fds);
     FD_SET(server_socket, &fds);
     int i = select(server_socket+1,&fds,NULL,NULL,NULL);
     if (FD_ISSET(server_socket, &fds)){
       bytes_read = recv(server_socket, buff, 22, 0);
-      printf("%s\n",buff);
-    }
-    else{}
-    int * works;
-    int len, bytes_sent;
-    buff = calloc(22,1);
-    works = calloc(20,1);
-    printf("Make a move: ");
-    fflush(stdin);
-    if(!fgets(buff,4,stdin)) er();
-    buff[2] = '\0';
-    works = translateInput(buff);
-    if(works[0] == 4){
-      continue;
-    }
-    len = strlen(buff);
-    bytes_sent = send(server_socket, buff, len, 0);
-    if (bytes_sent == 0) er();
-    bytes_read = recv(server_socket, buff, 22, 0);
-    if (bytes_read == 0) er();
-    if (buff[1] == 4){printf("Invalid position; Please input a valid square\n");continue;}
-    else{
-      printf("%s\n",buff);
+      if (buff[1] != 4){
+        printf("%s\n",buff);
+      }
+      buff = calloc(22,1);
+      works = calloc(20,1);
+      printf("Make a move: ");
+      fflush(stdin);
+      if(!fgets(buff,4,stdin)) er();
+      buff[2] = '\0';
+      works = translateInput(buff);
+      if(works[0] == 4){
+        continue;
+      }
+      len = strlen(buff);
+      bytes_sent = send(server_socket, buff, len, 0);
+      if (bytes_sent == 0) er();
     }
   }
 }
