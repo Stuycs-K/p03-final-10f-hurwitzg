@@ -24,3 +24,7 @@ other, and the server logs the game. Working on streamlining gameplay.
 ### 2026-01-12 - implementing select
 Roughly 1 hour. Began implementing select so that the server knows who's turn it is and the clients
 can know when to make a move.
+
+### 2026-01-13 - implementing select & finishing game
+Roughly 3 hours. Finished implementing select; there was a bug where the board wouldn't update
+and I fixed that; base game is done;

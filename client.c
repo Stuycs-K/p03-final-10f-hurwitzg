@@ -16,15 +16,17 @@ void clientLogic(int server_socket, char turn){
       if (buff[1] != 4){
         printf("%s\n",buff);
       }
-      buff = calloc(22,1);
-      works = calloc(20,1);
-      printf("Make a move: ");
-      fflush(stdin);
-      if(!fgets(buff,4,stdin)) er();
-      buff[2] = '\0';
-      works = translateInput(buff);
-      if(works[0] == 4){
-        continue;
+      while(1){
+        buff = calloc(22,1);
+        works = calloc(20,1);
+        printf("Make a move: ");
+        fflush(stdin);
+        if(!fgets(buff,4,stdin)) er();
+        buff[2] = '\0';
+        works = translateInput(buff);
+        if(works[0] != 4){
+          break;
+        }
       }
       len = strlen(buff);
       bytes_sent = send(server_socket, buff, len, 0);
