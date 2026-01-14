@@ -27,4 +27,4 @@ can know when to make a move.
 
 ### 2026-01-13 - implementing select & finishing game
 Roughly 3 hours. Finished implementing select; there was a bug where the board wouldn't update
-and I fixed that; base game is done;
+and I fixed that; base game is done; fixing bugs;

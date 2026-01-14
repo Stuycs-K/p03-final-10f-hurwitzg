@@ -77,9 +77,11 @@ void subserver_logic(int client_socket1, int client_socket2){
         continue;
       }
     }
-    else if(t2){}
-    else{p1 = 'X';
-    p2 = 'O';
+    else if(FD_ISSET(client_socket1,&fds) && t2){
+      char * waste = calloc(1,1);
+      bytes_read = recv(client_socket1, waste, 1, 0);
+    }
+    else{
       continue;
     }
     buff = calloc(BUFFER_SIZE,1);
@@ -125,12 +127,17 @@ void subserver_logic(int client_socket1, int client_socket2){
         bytes_sent = send(client_socket2, buff, 3, 0);
         continue;
       }
-  	}
-    else{
-      continue;
     }
+      else if(FD_ISSET(client_socket2,&fds) && !t2){
+        char * waste = calloc(1,1);
+        bytes_read = recv(client_socket2, waste, 1, 0);
+      }
+      else{
+        continue;
+      }
+  	}
   }
-}
+
 
 int main(int argc, char *argv[] ) {
   int listen_socket = server_setup();
