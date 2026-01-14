@@ -1,7 +1,7 @@
 
 #include "serverHelp.h"
 
-void clientLogic(int server_socket){
+void clientLogic(int server_socket, char turn){
   fd_set fds;
   int bytes_read;
   char * buff = calloc(BUFFER_SIZE,1);
@@ -35,7 +35,7 @@ void clientLogic(int server_socket){
 
 int main(int argc, char *argv[] ) {
     char* IP = "127.0.0.1";
-
+    char turn;
     if(argc>1){
       IP=argv[1];
     }
@@ -44,8 +44,15 @@ int main(int argc, char *argv[] ) {
     char * buff = calloc(BUFFER_SIZE,1);
     bytes_read = recv(server_socket, buff, BUFFER_SIZE, 0);
     while(1){
-      if (!strcmp(buff,"initial"))break;
+      if (!strcmp(buff,"initial1")){
+        turn = 1;
+        break;
+      }
+      if (!strcmp(buff,"initial2")){
+        turn = 0;
+        break;
+      }
     }
     printf("client connected.\n");
-    clientLogic(server_socket);
+    clientLogic(server_socket,turn);
 }

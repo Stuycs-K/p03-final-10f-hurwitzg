@@ -23,7 +23,7 @@ void subserver_logic(int client_socket1, int client_socket2){
   int bytes_sent;
   pBoard = printBoard(board);
   bytes_sent = send(client_socket1, pBoard, 22, 0);
-  bytes_sent = send(client_socket2, pBoard, 22, 0);
+  //bytes_sent = send(client_socket2, pBoard, 22, 0);
   char t2 = 0;
 	while(1){
     FD_ZERO(&fds);
@@ -128,10 +128,11 @@ int main(int argc, char *argv[] ) {
     printf("client connected.\n");
     int client_socket2 = server_tcp_handshake(listen_socket);
     printf("client connected.\n");
-    char * temp = "initial";
+    char * temp1 = "initial1";
+    char * temp2 = "initial2";
     int bytes_sent;
-    bytes_sent = send(client_socket1, temp, 20, 0);
-    bytes_sent = send(client_socket2, temp, 20, 0);
+    bytes_sent = send(client_socket1, temp1, 20, 0);
+    bytes_sent = send(client_socket2, temp2, 20, 0);
     int p = fork();
 		if (p < 0)er();
     if (p == 0){
