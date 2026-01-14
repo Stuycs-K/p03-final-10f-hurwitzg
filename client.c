@@ -28,6 +28,15 @@ void clientLogic(int server_socket, char turn){
         bytes_sent = send(server_socket, buff, len, 0);
         if (bytes_sent == 0) er();
       }
+      else{
+        printf("Make a move: ");
+        fflush(stdin);
+        if(!fgets(buff,4,stdin)) er();
+        buff[2] = '\0';
+        len = strlen(buff);
+        bytes_sent = send(server_socket, buff, len, 0);
+        if (bytes_sent == 0) er();
+      }
     }
   }
 }
