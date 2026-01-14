@@ -63,7 +63,8 @@ int * translateInput(char * str){
 }
 char ** boardChange(char ** board, char * input, char XorO){
   int * coords = calloc(sizeof(int),2);
-  if(!(coords = translateInput(input)))return board;
+  coords = translateInput(input);
+  if(coords[0] == 4)return NULL;
   if (XorO == 'X'){
     if (board[coords[0]-1][coords[1]] == '_'){
       board[coords[0]-1][coords[1]] = 'X';

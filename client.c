@@ -12,25 +12,22 @@ void clientLogic(int server_socket, char turn){
     FD_SET(server_socket, &fds);
     int i = select(server_socket+1,&fds,NULL,NULL,NULL);
     if (FD_ISSET(server_socket, &fds)){
-      bytes_read = recv(server_socket, buff, 22, 0);
+      bytes_read = recv(server_socket, buff, 40, 0);
+      if (bytes_read == 0)exit(0);
+      if (bytes_read < 0)er();
       if (buff[1] != 4){
         printf("%s\n",buff);
-      }
-      while(1){
         buff = calloc(22,1);
         works = calloc(20,1);
+        fflush(stdin);
         printf("Make a move: ");
         fflush(stdin);
         if(!fgets(buff,4,stdin)) er();
         buff[2] = '\0';
-        works = translateInput(buff);
-        if(works[0] != 4){
-          break;
-        }
+        len = strlen(buff);
+        bytes_sent = send(server_socket, buff, len, 0);
+        if (bytes_sent == 0) er();
       }
-      len = strlen(buff);
-      bytes_sent = send(server_socket, buff, len, 0);
-      if (bytes_sent == 0) er();
     }
   }
 }
