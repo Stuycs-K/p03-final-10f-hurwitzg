@@ -21,13 +21,17 @@ void clientLogic(int server_socket, char turn){
       buff[2] = '\0';
       len = strlen(buff);
       bytes_sent = send(server_socket, buff, len, 0);
-      if (bytes_sent == 0) er();
+      if (bytes_sent == 0) break;
     }
     else{
       fflush(stdin);
       fflush(stdout);
     }
   }
+  bytes_read = recv(server_socket, buff, 40, 0);
+  if (bytes_read == 0)exit(0);
+  if (bytes_read < 0)er();
+  printf("%s\n",buff);
 }
 
 
