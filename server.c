@@ -32,112 +32,54 @@ void subserver_logic(int client_socket1, int client_socket2){
     p2 = 'X';
     p1 = 'O';
   }
-  char t2 = 0;
+  char turn = 0;
+
 	while(1){
+    int current = !turn ? client_socket1 : client_socket2;
+    int other   = !turn ? client_socket2 : client_socket1;
+    char piece  = !turn ? p1 : p2;
     FD_ZERO(&fds);
     FD_SET(client_socket1, &fds);
-    int i = select(client_socket1+1,&fds,NULL,NULL,NULL);
-    if (FD_ISSET(client_socket1,&fds) && !t2){
-      bytes_read = recv(client_socket1, buff, BUFFER_SIZE, 0);
-      if (bytes_read == 0)exit(0);
-      if (boardChange(board, buff,p1)){
-        pBoard = printBoard(board);
-        if (evaluate(board) == 'C'){
-          t2 = 1;
-          bytes_sent = send(client_socket2, pBoard, 22, 0);
-        }
-        else if (evaluate(board) == 'T'){
-          char * temp = calloc(40,1);
-          strcat(temp,"You tie!\n");
-          strcat(temp,pBoard);
-          bytes_sent = send(client_socket1, temp, 40, 0);
-          bytes_sent = send(client_socket2, temp, 40, 0);
-          break;
-        }
-        else if (evaluate(board) == 'X'){
-          char * temp = calloc(40,1);
-          strcat(temp,"X wins!\n");
-          strcat(temp,pBoard);
-          bytes_sent = send(client_socket1, temp, 40, 0);
-          bytes_sent = send(client_socket2, temp, 40, 0);
-          break;
-        }
-        else{
-          char * temp = calloc(40,1);
-          strcat(temp,"O wins!\n");
-          strcat(temp,pBoard);
-          bytes_sent = send(client_socket1, temp, 40, 0);
-          bytes_sent = send(client_socket2, temp, 40, 0);
-          break;
-        }
-      }
-      else{
-        printf("hello\n");
-        buff[1] = 4;
-        bytes_sent = send(client_socket1, buff, 22, 0);
-        continue;
-      }
-    }
-    else if(FD_ISSET(client_socket1,&fds) && t2){
-      char * waste = calloc(1,1);
-      bytes_read = recv(client_socket1, waste, 1, 0);
-    }
-    else{
-      continue;
-    }
-    buff = calloc(BUFFER_SIZE,1);
-    FD_ZERO(&fds);
     FD_SET(client_socket2, &fds);
-    i = select(client_socket2+1,&fds,NULL,NULL,NULL);
-    if (FD_ISSET(client_socket2,&fds) && t2){
-      bytes_read = recv(client_socket2, buff, BUFFER_SIZE, 0);
+    int maxfd = max(client_socket1,client_socket2) + 1;
+    int i = select(maxfd,&fds,NULL,NULL,NULL);
+    if (FD_ISSET(current,&fds)){
+      bytes_read = recv(current, buff, BUFFER_SIZE, 0);
       if (bytes_read == 0)exit(0);
-      if (boardChange(board, buff,p2)){
-        pBoard = printBoard(board);
-        if (evaluate(board) == 'C'){
-          t2 = 0;
-          bytes_sent = send(client_socket1, pBoard, 22, 0);
-        }
-        else if (evaluate(board) == 'T'){
-          char * temp = calloc(40,1);
-          strcat(temp,"You tie!\n");
-          strcat(temp,pBoard);
-          bytes_sent = send(client_socket1, temp, 40, 0);
-          bytes_sent = send(client_socket2, temp, 40, 0);
-          break;
-        }
-        else if (evaluate(board) == 'X'){
-          char * temp = calloc(40,1);
-          strcat(temp,"X wins!\n");
-          strcat(temp,pBoard);
-          bytes_sent = send(client_socket1, temp, 40, 0);
-          bytes_sent = send(client_socket2, temp, 40, 0);
-          break;
-        }
-        else{
-          char * temp = calloc(40,1);
-          strcat(temp,"O wins!\n");
-          strcat(temp,pBoard);
-          bytes_sent = send(client_socket1, temp, 40, 0);
-          bytes_sent = send(client_socket2, temp, 40, 0);
-          break;
-        }
+      if (!boardChange(board, buff, piece)) {
+        bytes_sent = send(current, "Invalid move. Try again.\n", 26, 0);
+        continue;
+      }
+      pBoard = printBoard(board);
+      if (evaluate(board) == 'C'){
+        bytes_sent = send(other, pBoard, 22, 0);
+        turn = 1 - turn;
+      }
+      else if (evaluate(board) == 'T'){
+        char * temp = "You tie!\n";
+        strcat(temp,pBoard);
+        bytes_sent = send(client_socket1, temp, 40, 0);
+        bytes_sent = send(client_socket2, temp, 40, 0);
+        break;
+      }
+      else if (evaluate(board) == 'X'){
+        char * temp = "X Wins!\n";
+        strcat(temp,pBoard);
+        bytes_sent = send(client_socket1, temp, 40, 0);
+        bytes_sent = send(client_socket2, temp, 40, 0);
+        break;
       }
       else{
-        buff[1] = 4;
-        bytes_sent = send(client_socket2, buff, 3, 0);
-        continue;
+        char * temp = "O Wins!\n";
+        strcat(temp,pBoard);
+        bytes_sent = send(client_socket1, temp, 40, 0);
+        bytes_sent = send(client_socket2, temp, 40, 0);
+        break;
       }
     }
-      else if(FD_ISSET(client_socket2,&fds) && !t2){
-        char * waste = calloc(1,1);
-        bytes_read = recv(client_socket2, waste, 1, 0);
-      }
-      else{
-        continue;
-      }
-  	}
   }
+}
+
 
 
 int main(int argc, char *argv[] ) {
