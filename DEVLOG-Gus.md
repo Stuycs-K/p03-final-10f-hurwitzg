@@ -31,3 +31,6 @@ and I fixed that; base game is done; fixing bugs;
 
 ### 2026-01-14 - bug fixing
 Roughly 2 hours. Game breaks if someone goes out of turn or makes a move that's already been made. I fixed that.
+
+### 2026-01-15 - bug fixing & final touches; video
+Roughly 2 hours. Fixed all the bugs and recorded the video.
