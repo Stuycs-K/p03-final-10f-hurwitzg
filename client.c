@@ -8,24 +8,37 @@ void clientLogic(int server_socket, char turn){
   int len, bytes_sent;
   while(1){
     FD_ZERO(&fds);
+    FD_SET(0,&fds);
     FD_SET(server_socket, &fds);
     int i = select(server_socket+1,&fds,NULL,NULL,NULL);
     if (FD_ISSET(server_socket, &fds)){
       bytes_read = recv(server_socket, buff, 40, 0);
-      if (bytes_read == 0)exit(0);
       if (bytes_read < 0)er();
-      printf("%s\n",buff);
-      printf("Make a move: ");
-      fflush(stdout);
-      if(!fgets(buff,4,stdin)) er();
-      buff[2] = '\0';
-      len = strlen(buff);
-      bytes_sent = send(server_socket, buff, len, 0);
-      if (bytes_sent == 0) er();
+      if (!strncmp(buff,"\nTURN",5) || !strcmp(buff,"Invalid move. Try again.\n")){
+        if (!strncmp(buff,"\nTURN",5)){
+          char * tok = strsep(&buff,"N");
+        }
+        printf("%s\n",buff);
+        printf("Make a move: ");
+        fflush(stdout);
+        if(!fgets(buff,4,stdin)) er();
+        buff[2] = '\0';
+        len = strlen(buff);
+        bytes_sent = send(server_socket, buff, len, 0);
+        if (bytes_sent == 0) er();
+      }
+      else{
+        bytes_read = recv(server_socket, buff, 40, 0);
+        printf("%s\n",buff);
+        break;
+      }
     }
     else{
-      fflush(stdin);
-      fflush(stdout);
+      if(FD_ISSET(0, &fds)){
+        char * dump = calloc(128,1);
+        fgets(dump,128,0);
+        free(dump);
+      }
     }
   }
 }

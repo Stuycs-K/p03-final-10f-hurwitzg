@@ -22,7 +22,12 @@ void subserver_logic(int client_socket1, int client_socket2){
   int bytes_read;
   int bytes_sent;
   pBoard = printBoard(board);
-  bytes_sent = send(client_socket1, pBoard, 22, 0);
+  char * t = calloc(7,1);
+  strcpy(t,"\nTURN");
+  char * toSend = calloc(27,1);
+  strcat(toSend,t);
+  strcat(toSend,pBoard);
+  bytes_sent = send(client_socket1, toSend, 27, 0);
   char p1,p2;
   if (r()){
     p1 = 'X';
@@ -51,13 +56,19 @@ void subserver_logic(int client_socket1, int client_socket2){
         continue;
       }
       pBoard = printBoard(board);
+      printf("%c\n",evaluate(board));
       if (evaluate(board) == 'C'){
-        bytes_sent = send(other, pBoard, 22, 0);
+        free(toSend);
+        toSend = calloc(27,1);
+        strcat(toSend,t);
+        strcat(toSend,pBoard);
+        bytes_sent = send(other, toSend, 27, 0);
         turn = 1 - turn;
       }
       else if (evaluate(board) == 'T'){
         char * temp = "You tie!\n";
         strcat(temp,pBoard);
+        printf("%s\n",temp);
         bytes_sent = send(client_socket1, temp, 40, 0);
         bytes_sent = send(client_socket2, temp, 40, 0);
         break;
@@ -65,6 +76,7 @@ void subserver_logic(int client_socket1, int client_socket2){
       else if (evaluate(board) == 'X'){
         char * temp = "X Wins!\n";
         strcat(temp,pBoard);
+        printf("%s\n",temp);
         bytes_sent = send(client_socket1, temp, 40, 0);
         bytes_sent = send(client_socket2, temp, 40, 0);
         break;
@@ -72,6 +84,7 @@ void subserver_logic(int client_socket1, int client_socket2){
       else{
         char * temp = "O Wins!\n";
         strcat(temp,pBoard);
+        printf("%s\n",temp);
         bytes_sent = send(client_socket1, temp, 40, 0);
         bytes_sent = send(client_socket2, temp, 40, 0);
         break;
