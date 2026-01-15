@@ -11,7 +11,7 @@
 int er();
 char ** boardSetup();
 int * translateInput(char * str);
-char ** boardChange(char ** board, char * input, char XorO);
+char boardChange(char ** board, char * input, char XorO);
 char * printBoard(char ** board);
 char evaluate(char ** board);
 #endif
