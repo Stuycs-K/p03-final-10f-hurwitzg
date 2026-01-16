@@ -12,6 +12,10 @@ blocked until another user connects. The two will then play tic tac toe.
 Each user will create a username and a password, and will log in each time they
 play. Additionally, their stats will be stored and updated after each game, and will
 be displayed when they play.
+
+### Project Video:
+
+https://drive.google.com/file/d/1nTFf33lOLzZZHesRHELK4q59c0vlQnhT/view?usp=sharing
   
 ### Instructions:
 
@@ -20,10 +24,9 @@ Install: clone
 Compile: make compile
 
 Run: make game
-1. Create a username (1-20 characters) and a password (1-20 characters)
-2. Wait for someone else to connect
-3. To make a move, input the letter and number of the desired square
-4. At the end of the game, when offered to play again, type Y to continue or N to decline
+1. Wait for someone else to connect
+2. To make a move, input the letter and number of the desired square
+3. At the end of the game, when offered to play again, type Y to continue or N to decline
 
 ### Resources/ References:
 
