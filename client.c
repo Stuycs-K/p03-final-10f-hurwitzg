@@ -42,10 +42,6 @@ void clientLogic(int server_socket, char turn){
       }
     }
   }
-  bytes_read = recv(server_socket, buff, 40, 0);
-  if (bytes_read == 0)exit(0);
-  if (bytes_read < 0)er();
-  printf("%s\n",buff);
 }
 
 
@@ -55,20 +51,30 @@ int main(int argc, char *argv[] ) {
     if(argc>1){
       IP=argv[1];
     }
-    int server_socket = client_tcp_handshake(IP);
-    int bytes_read;
-    char * buff = calloc(BUFFER_SIZE,1);
-    bytes_read = recv(server_socket, buff, BUFFER_SIZE, 0);
     while(1){
-      if (!strcmp(buff,"initial1")){
-        turn = 1;
-        break;
+      int server_socket = client_tcp_handshake(IP);
+      int bytes_read;
+      char * buff = calloc(BUFFER_SIZE,1);
+      bytes_read = recv(server_socket, buff, BUFFER_SIZE, 0);
+      while(1){
+        if (!strcmp(buff,"initial1")){
+          turn = 1;
+          break;
+        }
+        if (!strcmp(buff,"initial2")){
+          turn = 0;
+          break;
+        }
       }
-      if (!strcmp(buff,"initial2")){
-        turn = 0;
-        break;
+      printf("client connected.\n");
+      clientLogic(server_socket,turn);
+      printf("Play again? Y/N\n");
+      if(!fgets(buff,4,stdin)) er();
+      if (buff[0] == 'Y' || buff[0] == 'y'){
+        continue;
+      }
+      else{
+        exit(0);
       }
     }
-    printf("client connected.\n");
-    clientLogic(server_socket,turn);
-}
+  }
